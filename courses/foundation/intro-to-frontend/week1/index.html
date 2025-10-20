@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <title>PAYMENT <span>FORM</span></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="header-text">
+            <h1>SOME HEADER</h1>
+            <p>Some optional stuff.</p>
+        </div>
+        <div class="order-summary">
+            <h1>Order Summary</h1>
+            <div class="order-total-top">
+                <div>TOTAL</div>
+                <div>$333 / month</div>
+            </div>
+            <div class="horizontal-line"></div>
+            <div class="order-total-bottom">
+                <div>TOTAL</div>
+                <div>$100</div>
+            </div>
+        </div>
+    </header>
+
+    <form>
+        <div class="payment-method">
+            <h2>Payment Method</h2>
+            <div class="payment-method-selectors">
+                <label for="card-payment-selector">
+                    <div class="card card-payment-card" data="card-payment">
+                        <input name="payment-method-selector" value="card-payment" id="card-payment-selector"
+                            type="radio" />
+                        <img src="images/cards.webp" class="card-logos" alt="Payment cards">
+                        <div>
+                            <p>Credit/Debit</p>
+                        </div>
+                    </div>
+                </label>
+                <label for="paypal-payment-selector">
+                    <div class="card paypal-payment-card" data="paypal-payment">
+                        <input name="payment-method-selector" value="paypal-payment" id="paypal-payment-selector"
+                            type="radio" />
+                        <img src="images/paypal.webp" class="paypal-logo" alt="Paypal">
+                        <div>
+                            <p>Paypal</p>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+
+        <div class="card-info">
+            <h2>Card Info</h2>
+            <div class="all-payment-info">
+                <div class="card-info-container">
+                    <label for="card-number">Card number</label>
+                    <img src="images/question-mark.png" class="info-icon">
+                    <input class="input-bar" type="text" id="" placeholder="1234 1234 1234 1234" name="card-number"
+                        required />
+                </div>
+                <div class="exp-and-cvv">
+                    <div class="exp-and-cvv-inputs">
+                        <label for="exp-date">Expiry date</label>
+                        <input type="text" class="input-bar" id="" placeholder="MM / YY" name="exp-date" required />
+                    </div>
+
+                    <div class="exp-and-cvv-inputs">
+                        <label for="sec-code">Security code</label>
+                        <img src="images/question-mark.png" class="info-icon">
+                        <input type="number" class="input-bar" id="" placeholder="CVV" name="sec-code" required />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" class="buy-now" id="buy-now" value="Buy now" />
+        <a href="#" onclick="alert('That\'s too bad...')"><p class="help-button">Need Help?</p></a>
+    </form>
+    <script src="source.js" defer>
+    </script>
+</body>
+
+</html>
