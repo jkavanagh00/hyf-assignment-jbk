@@ -11,9 +11,24 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f0f8ff;
+            margin: 0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
         h1 {
             text-align: center;
+            font-size: 2.5rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 1.1rem;
+        }
+        ul {
+            font-size: 1.1rem;
         }
         #funButton {
             display: block;
@@ -28,6 +43,60 @@
         }
         #funButton:hover {
             background-color: #45a049;
+        }
+
+        /* Mobile styles (768px and below) */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            p, ul {
+                font-size: 1rem;
+            }
+            #funButton {
+                width: 100%;
+                max-width: 300px;
+                padding: 15px;
+                font-size: 18px;
+            }
+        }
+
+        /* Extra small mobile styles (480px and below) */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.2rem;
+            }
+            p, ul {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Desktop styles (1024px and above) */
+        @media screen and (min-width: 1024px) {
+            body {
+                padding: 40px;
+            }
+            h1 {
+                font-size: 3rem;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            p, ul {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
