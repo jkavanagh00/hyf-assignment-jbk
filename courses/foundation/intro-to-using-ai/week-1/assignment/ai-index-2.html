@@ -9,16 +9,44 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f0f8ff;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         h1 {
             text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        ul {
+            font-size: 1.1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
         }
         
         .fun-button {
             display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
+            margin: 30px auto;
+            padding: 12px 24px;
             background-color: #ff6b6b;
             color: white;
             border: none;
@@ -32,20 +60,79 @@
         .fun-button:hover {
             background-color: #ff5252;
         }
+        
+        /* Mobile styles (up to 768px) */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            p, ul {
+                font-size: 1rem;
+            }
+            
+            .fun-button {
+                width: 90%;
+                max-width: 300px;
+                padding: 15px;
+                font-size: 18px;
+            }
+        }
+        
+        /* Tablet styles (769px to 1024px) */
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            body {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.3rem;
+            }
+        }
+        
+        /* Desktop styles (1025px and up) */
+        @media screen and (min-width: 1025px) {
+            body {
+                padding: 40px;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            p, ul {
+                font-size: 1.2rem;
+            }
+            
+            .fun-button {
+                padding: 15px 30px;
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>About Me</h1>
-    <p>Hello! My name is [Your Name] and I'm excited to share a bit about myself. I'm currently learning web development and exploring the world of programming. This page is a simple introduction to who I am and what interests me.</p>
-    
-    <h2>My Interests</h2>
-    <ul>
-        <li>Juggling</li>
-        <li>Games</li>
-        <li>Programming</li>
-    </ul>
-    
-    <button class="fun-button" onclick="changeBackgroundColor()">🎨 Change Background Color!</button>
+    <div class="container">
+        <h1>About Me</h1>
+        <p>Hello! My name is [Your Name] and I'm excited to share a bit about myself. I'm currently learning web development and exploring the world of programming. This page is a simple introduction to who I am and what interests me.</p>
+        
+        <h2>My Interests</h2>
+        <ul>
+            <li>Juggling</li>
+            <li>Games</li>
+            <li>Programming</li>
+        </ul>
+        
+        <button class="fun-button" onclick="changeBackgroundColor()">🎨 Change Background Color!</button>
+    </div>
     
     <script>
         function changeBackgroundColor() {
