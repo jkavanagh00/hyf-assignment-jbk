@@ -14,6 +14,24 @@
         h1 {
             text-align: center;
         }
+        
+        .fun-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .fun-button:hover {
+            background-color: #ff5252;
+        }
     </style>
 </head>
 <body>
@@ -26,5 +44,15 @@
         <li>Games</li>
         <li>Programming</li>
     </ul>
+    
+    <button class="fun-button" onclick="changeBackgroundColor()">🎨 Change Background Color!</button>
+    
+    <script>
+        function changeBackgroundColor() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.style.backgroundColor = randomColor;
+        }
+    </script>
 </body>
 </html>
