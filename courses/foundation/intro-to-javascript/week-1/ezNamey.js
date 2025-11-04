@@ -1,6 +1,7 @@
-firstParticles = ['Shop', 'Drink', 'Eat', 'Buy', 'Spend', 'Get', 'Bet', 'Swipe', 'Game', 'Pic', 'View']
-secondParticles = ['r' ,'s\'r\'Us', 'ify', 'ly', 'hub', 'ful', 'book', 'Saver', 'Finder', 'tube']
+const firstWords = ["Easy", "Awesome", "Corporate", "Cool", "Fun", "Good", "Great", "Better", "Superb", "Yes"];
+const secondWords = ["Corporation", "Company", "Firm", "Business", "Fund", "Alliance", "Equity", "Capital", "Finance", "Holdings"];
 
-getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const startupName = getRandom(firstWords) + " " + getRandom(secondWords);
 
-ezNamey = () => `Your new app name is ${getRandom(firstParticles)}${getRandom(secondParticles)}!`;
+console.log("Your new app name is " + startupName + "!");

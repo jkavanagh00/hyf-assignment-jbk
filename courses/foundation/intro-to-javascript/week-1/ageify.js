@@ -1,3 +1,5 @@
-const ageify = (birthYear, futureYear) => `You will be ${futureYear - birthYear} years old in ${futureYear}`;
+const yearOfBirth = 1989;
+const yearFuture = 2030;
+const age = yearFuture - yearOfBirth;
 
-console.log(ageify(1989, 2050));
+console.log("You will be " + age + " years old in " + yearFuture);
