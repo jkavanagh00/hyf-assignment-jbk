@@ -2,8 +2,8 @@ function ripOffDetector(clientName) {
     const volumeInMeters = customerData[clientName].width * customerData[clientName].depth * customerData[clientName].height;
     const housePrice = (volumeInMeters * 2.5 * 1000) + (customerData[clientName].gardenSizeInM2 * 300);
     return customerData[clientName].quotedPrice <= housePrice ?
-    `Looking good, ${clientName}, you should buy!` :
-    `What a rip off! Get out of there ${clientName}!`;
+    console.log(`Looking good, ${clientName}, you should buy!`) :
+    console.log(`What a rip off! Get out of there ${clientName}!`);
 }
 
 const customerData = {
@@ -23,5 +23,5 @@ const customerData = {
     }
 }
 
-console.log(ripOffDetector('Peter'));
-console.log(ripOffDetector('Julia'));
+ripOffDetector("Peter");
+ripOffDetector("Julia");
