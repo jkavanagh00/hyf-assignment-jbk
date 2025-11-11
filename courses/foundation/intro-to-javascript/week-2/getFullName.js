@@ -33,9 +33,13 @@ function getFullName(firstName, secondName) {
         return obj.firstName === firstName && obj.secondName === secondName;
     });
     
-    if (!passenger) {return "No passenger found"}
-    return passenger.formal ? `${honorifics[passenger.gender]} ${passenger.firstName} ${passenger.secondName}` : `${passenger.firstName} ${passenger.secondName}`
-}
+    if (!passenger) {
+        return "No passenger found"
+    } else {
+        return passenger.formal ? 
+        `${honorifics[passenger.gender]} ${passenger.firstName} ${passenger.secondName}` : 
+        `${passenger.firstName} ${passenger.secondName}`};
+};
 
 console.log(getFullName("John", "Smith"));
 console.log(getFullName("Jane", "Smythe"));
