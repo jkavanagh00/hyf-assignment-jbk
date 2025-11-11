@@ -40,8 +40,3 @@ function getFullName(firstName, secondName) {
         `${honorifics[passenger.gender]} ${passenger.firstName} ${passenger.secondName}` : 
         `${passenger.firstName} ${passenger.secondName}`};
 };
-
-console.log(getFullName("John", "Smith"));
-console.log(getFullName("Jane", "Smythe"));
-console.log(getFullName("Jayden", "Smith"));
-console.log(getFullName("Jane", "Smith"));

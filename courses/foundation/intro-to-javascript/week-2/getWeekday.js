@@ -12,9 +12,4 @@ function getWeekday(num) {
     weekdays[currentWeekday - 7] :
     weekdays[currentWeekday];
     };
-}
-
-console.log(getWeekday(0));
-console.log(getWeekday(1));
-console.log(getWeekday(9));
-console.log(getWeekday(17));
+};

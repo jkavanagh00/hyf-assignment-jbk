@@ -6,7 +6,3 @@ function clothingPicker(temp) {
     temp < 0 ? "Slippers and pajamas" :
     "Invalid temperature entered" ; 
 }
-
-console.log(clothingPicker(18));
-console.log(clothingPicker(-3));
-console.log(clothingPicker("very cold"));
