@@ -1,8 +1,15 @@
 function clothingPicker(temp) {
-    return temp >= 20 ? "T-Shirt" :
-    temp >= 15 ? "Sweater" :
-    temp >= 10 ? "Coat" :
-    temp >= 0 ? "Puffer jacket" :
-    temp < 0 ? "Slippers and pajamas" :
-    "Invalid temperature entered" ; 
+    if (temp >= 20) {
+        return "T-Shirt";
+    } else if (temp >= 15) {
+        return "Sweater";
+    } else if (temp >= 10) {
+        return "Coat";
+    } else if (temp >= 0) {
+        return "Puffer jacket";
+    } else if (temp < 0) {
+        return "Slippers and pajamas";
+    } else {
+        return "Invalid temperature entered";
+    }
 }
