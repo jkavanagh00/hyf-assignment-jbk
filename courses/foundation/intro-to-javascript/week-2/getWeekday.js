@@ -1,15 +1,16 @@
-const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday","Thursday", "Friday", "Saturday"]
-const currentDate = new Date();
-const currentDay = currentDate.getDay();
+const weekdays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+const currentDay = new Date().getDay();
 
 function getWeekday(num) {
-    const difference = num % 7;
-    const currentWeekday = currentDay + difference;
-    if (num === 0) {
-        return "Today"
-    } else {
-    return currentWeekday > 6 ?
-    weekdays[currentWeekday - 7] :
-    weekdays[currentWeekday];
-    };
-};
+  const targetDay = currentDay + num % 7;
+  return num === 0 ? "Today" : weekdays[targetDay];
+}
