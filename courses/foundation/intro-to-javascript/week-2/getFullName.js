@@ -1,42 +1,12 @@
 const honorifics = {
-    man: "Mr.",
-    woman: "Ms.",
-    "non-binary": "Mx."
-}
+    man: "Lord",
+    woman: "Lady",
+    nonBinary: "Regent"
+};
 
-const passengers = [
-    {
-        firstName: "John",
-        secondName: "Smith",
-        gender: "man",
-        formal: false
-    },
-    {
-        firstName: "Jane",
-        secondName: "Smythe",
-        gender: "woman",
-        formal: true
-    },
-    {
-        firstName: "Jayden",
-        secondName: "Smith",
-        gender: "non-binary",
-        formal: true
-    }
-]
+const fullName1 = getFullName("John", "Doe");
+const fullName2 = getFullName("Jane", "Doe", true);
 
-let formal = false;
-let gender = "man";
-
-function getFullName(firstName, secondName) {
-    var passenger = passengers.find(obj => {
-        return obj.firstName === firstName && obj.secondName === secondName;
-    });
-    
-    if (!passenger) {
-        return "No passenger found"
-    } else {
-        return passenger.formal ? 
-        `${honorifics[passenger.gender]} ${passenger.firstName} ${passenger.secondName}` : 
-        `${passenger.firstName} ${passenger.secondName}`};
+function getFullName(firstName, secondName, useFormalName, gender) {
+    return useFormalName && gender ? `${honorifics[gender]} ${firstName} ${secondName}` : `${firstName} ${secondName}`;
 };
