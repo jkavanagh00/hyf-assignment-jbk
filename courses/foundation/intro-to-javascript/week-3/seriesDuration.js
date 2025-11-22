@@ -20,7 +20,9 @@ const seriesDurations = [
 ];
 
 function calculatePercentage(obj) {
-    const percentage = (((obj.hours + (obj.days * 24)) / (8760*80)) * 100);
+    const totalHoursWatched = obj.hours + (obj.days * 24);
+    const hoursInAYear = 8760*80;
+    const percentage = ((totalHoursWatched / hoursInAYear) * 100);
     return percentage.toFixed(3);
 }
 
