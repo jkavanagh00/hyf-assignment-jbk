@@ -31,11 +31,3 @@ function showStatus(activities) {
         `You have added ${length} activities. They amount to ${totalMinutes} minutes of usage.` :
         `You have added 1 activity. It amounts to ${totalMinutes} minutes of usage.`;
 }
-
-console.log(showStatus(activities));
-addActivity("coding", 23)
-console.log(showStatus(activities));
-addActivity("napping", 27)
-console.log(showStatus(activities));
-addActivity("making tea", 15);
-console.log(showStatus(activities));
