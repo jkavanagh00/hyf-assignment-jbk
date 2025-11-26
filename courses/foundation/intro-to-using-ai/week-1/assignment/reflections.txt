@@ -1,0 +1,3 @@
+I decided to approach this exercise by writing a set of 8 prompts of varying specificity and then tasking the LLM with building the same page three times to compare the different outputs.
+As expected, the basic HTML structure is consistent accross the three documents. Once more complex elements with less specificity (such as the button and the responsiveness) were included, consistency begins to drop. Buttons are labeled differently and are different sizes and colours. Responsiveness, though apparently functioning correctly in all three instances, is structured very differently.
+My main takeaway from this exercise is a nagging feeling that it sucked the joy out of the experience of creating this simple page.

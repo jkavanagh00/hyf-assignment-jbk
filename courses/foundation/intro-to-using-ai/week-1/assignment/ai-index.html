@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 1.1rem;
+        }
+        ul {
+            font-size: 1.1rem;
+        }
+        #funButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #funButton:hover {
+            background-color: #45a049;
+        }
+
+        /* Mobile styles (768px and below) */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            p, ul {
+                font-size: 1rem;
+            }
+            #funButton {
+                width: 100%;
+                max-width: 300px;
+                padding: 15px;
+                font-size: 18px;
+            }
+        }
+
+        /* Extra small mobile styles (480px and below) */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.2rem;
+            }
+            p, ul {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Desktop styles (1024px and above) */
+        @media screen and (min-width: 1024px) {
+            body {
+                padding: 40px;
+            }
+            h1 {
+                font-size: 3rem;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            p, ul {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>About Me</h1>
+    <p>Hello! I'm a passionate learner currently studying web development through the Hack Your Future program. I'm excited about building my skills in programming and creating meaningful digital experiences.</p>
+    <h2>My Interests</h2>
+    <ul>
+        <li>Juggling</li>
+        <li>Games</li>
+        <li>Programming</li>
+    </ul>
+    <button id="funButton" onclick="changeBackgroundColor()">🎨 Change Background Color!</button>
+
+    <script>
+        function changeBackgroundColor() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43', '#10ac84', '#ee5253'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.style.backgroundColor = randomColor;
+        }
+    </script>
+</body>
+</html>

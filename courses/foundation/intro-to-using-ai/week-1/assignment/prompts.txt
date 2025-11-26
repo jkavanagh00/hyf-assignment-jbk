@@ -1,0 +1,16 @@
+I would like to make a simple HTML page that introduces me and my interests.
+Begin by creating an HTML document and adding a heading with the text "About Me" at the top.
+
+Add a short introduction as a paragraph element below the heading.
+
+Add an unordered list of my interests (juggling, games, programming).
+
+Centre the heading.
+
+Change the font to a custom font.
+
+Add a background colour.
+
+Add a "fun" button somewhere on the page which changes the background colour to a random colour when clicked.
+
+Make this page responsive, using media queries to style the page for mobile and desktop size screens.
