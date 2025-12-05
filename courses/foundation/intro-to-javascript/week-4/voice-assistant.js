@@ -13,7 +13,7 @@ function introduction(nameString) {
 }
 
 function confirmName() {
-    if (userName.length == 0) {
+    if (userName.length > 0) {
         console.log("I don't believe we've met")
     } else {
         console.log(`Your name is ${userName}, of course`)
