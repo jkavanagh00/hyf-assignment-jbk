@@ -19,6 +19,16 @@ app.get("/", (_request, response) => {
   `);
 });
 
+app.get("/date", (_request, response) => {
+  const date = new Date();
+  response.send(`
+      <h1>${date}</h1>
+  `);
+
+});
+
+
+
 app.listen(3000, function () {
   console.log(`> Ready on http://localhost:3000`);
 });
