@@ -36,13 +36,13 @@ const formatRating = number => {
   let formattedRating = ""
   if (number % 2 === 0) {
     for (let i = 0; i < number; i += 2) {
-      formattedRating = formattedRating + "&#9733 ";
+      formattedRating += "&#9733 ";
     }
   } else {
     for (let i = 0; i < number-2; i += 2) {
-      formattedRating = formattedRating + "&#9733 ";
+      formattedRating += "&#9733 ";
     }
-    formattedRating = formattedRating + "&#11240 ";
+    formattedRating += "&#11240 ";
   }
   return '<span class="stars">' + formattedRating + '</span>';
 }
