@@ -67,20 +67,21 @@
         const name = document.getElementById("name").value;
         const house = houses[Math.floor(Math.random() * 4)];
         const message = name.length > 0 ? `${name} belongs in <b>${house}</b>,` : `You belong in <b>${house}</b>,`;
-        document.getElementById("text").innerHTML = message;
+        const text = document.getElementById("text");
+        text.innerHTML = message;
         document.getElementById("crest").src = crestUrls[house];
         switch (house) {
             case "Slytherin":
-                document.getElementById("text").innerHTML += "<br>the house of cunning and ambition.";
+                text.innerHTML += "<br>the house of cunning and ambition.";
                 break;
             case "Hufflepuff":
-                document.getElementById("text").innerHTML += "<br>the house of loyalty and patience.";
+                text.innerHTML += "<br>the house of loyalty and patience.";
                 break;
             case "Ravenclaw":
-                document.getElementById("text").innerHTML += "<br>the house of learning and wisdom.";
+                text.innerHTML += "<br>the house of learning and wisdom.";
                 break;
             case "Gryffindor":
-                document.getElementById("text").innerHTML += "<br>the house of daring and determination.";
+                text.innerHTML += "<br>the house of daring and determination.";
                 break;
         }
     }
