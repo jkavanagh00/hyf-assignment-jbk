@@ -1,6 +1,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   background-color: #f9fbfd;
+  justify-content: center;
 }
 
 * {
@@ -11,10 +12,55 @@ body,
 h1,
 h2 {
   margin: 0;
+  text-align: center;
 }
 
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+table {
+  padding: 40px;
+  width: 375px;
+  margin: 0 auto;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+th,
+td,
+tr {
+  text-align: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+th {
+  background-color: green;
+  color: white;
+}
+
+tr {
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #d8d8d8;
+}
+
+th:nth-child(1), td:nth-child(1) {
+  width: 50%;
+  padding-left: 5px;
+}
+th:nth-child(2) {
+  width: 25%;
+}
+th:nth-child(3) {
+  width: 25%;
+}
+
+.stars {
+  color: rgb(255, 174, 0);
 }

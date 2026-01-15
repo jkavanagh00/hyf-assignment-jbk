@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<head>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            background-color: blueviolet;
+            padding: 20px;
+            font-size: 18px;
+            color: gold;
+        }
+
+        #controls {
+            display: flex;
+            flex-direction: column;
+            min-height: 20vh;
+        }
+
+        #output {
+            min-height: 80vh;
+        }
+
+        img {
+            max-height: 600px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 26px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="controls">
+        <h1>The Sorting Hat</h1>
+        <label for="name">Enter your name:</label>
+
+        <input type="text" id="name"/>
+
+        <label for="name">Consult the sorting hat:</label>
+
+        <button onclick="assignHouse()" type="button" id="button">
+            Sort me!
+        </button>
+    </div>
+    <div id="output">
+        <img src="" id="crest">
+        <p id="text"></p>
+    </div>
+</body>
+<script>
+    const houses = ["Slytherin", "Hufflepuff", "Ravenclaw", "Gryffindor"];
+
+    const crestUrls = {
+        Slytherin: "https://static.wikia.nocookie.net/harrypotter/images/0/00/Slytherin_ClearBG.png/revision/latest?cb=20161020182557",
+        Hufflepuff: "https://static.wikia.nocookie.net/harrypotter/images/0/06/Hufflepuff_ClearBG.png/revision/latest?cb=20161020182518",
+        Ravenclaw: "https://static.wikia.nocookie.net/harrypotter/images/7/71/Ravenclaw_ClearBG.png/revision/latest?cb=20161020182442",
+        Gryffindor: "https://static.wikia.nocookie.net/harrypotter/images/b/b1/Gryffindor_ClearBG.png/revision/latest/scale-to-width-down/1000?cb=20190222162949"
+    }
+
+    const assignHouse = () => {
+        const name = document.getElementById("name").value;
+        const house = houses[Math.floor(Math.random() * 4)];
+        const message = name.length > 0 ? `${name} belongs in <b>${house}</b>,` : `You belong in <b>${house}</b>,`;
+        const text = document.getElementById("text");
+        text.innerHTML = message;
+        document.getElementById("crest").src = crestUrls[house];
+        switch (house) {
+            case "Slytherin":
+                text.innerHTML += "<br>the house of cunning and ambition.";
+                break;
+            case "Hufflepuff":
+                text.innerHTML += "<br>the house of loyalty and patience.";
+                break;
+            case "Ravenclaw":
+                text.innerHTML += "<br>the house of learning and wisdom.";
+                break;
+            case "Gryffindor":
+                text.innerHTML += "<br>the house of daring and determination.";
+                break;
+        }
+    }
+</script>
