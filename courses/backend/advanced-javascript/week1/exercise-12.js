@@ -1,3 +1,3 @@
 import { teas } from "./data/teas.js";
 
-const japaneseTeasByPrice = teas.filter(tea => tea.origin === "Japan").sort((a, b) => a.pricePerGram - b.pricePerGram);
+const organicTeaStrings = teas.filter(tea => tea.organic).map(tea => `${tea.name} - ${tea.pricePerGram * 100} DKK/100g`);
