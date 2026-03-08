@@ -1,15 +1,3 @@
-// filterTeas(teas, { organic: true });
-// // Returns all organic teas
-
-// filterTeas(teas, { origin: "Japan" });
-// // Returns all Japanese teas
-
-// filterTeas(teas, { organic: true, origin: "Japan" });
-// // Returns organic Japanese teas
-
-// filterTeas(teas, { type: "green", inStock: true });
-// // Returns green teas that are in stock
-
 import { teas } from "../data/teas.js";
 
 function filterTeas (teas, obj) {
@@ -22,4 +10,14 @@ function filterTeas (teas, obj) {
     return teas;
 }
 
-console.log(filterTeas(teas, { type: "green", inStock: true }));
+console.log('Organic teas: ', filterTeas(teas, { organic: true }))
+// Returns all organic teas
+
+console.log('Japanese teas: ', filterTeas(teas, { origin: "Japan" }))
+// Returns all Japanese teas
+
+console.log('Organic Japanese teas: ', filterTeas(teas, { organic: true, origin: "Japan" }))
+// Returns organic Japanese teas
+
+console.log('Green teas in stock: ', filterTeas(teas, { type: "green", inStock: true }))
+// Returns green teas that are in stock);
