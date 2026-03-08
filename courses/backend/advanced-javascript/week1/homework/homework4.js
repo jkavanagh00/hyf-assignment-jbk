@@ -5,9 +5,9 @@ function teasByOrigin(teas) {
     teas.forEach(tea => {
         const origin = tea.origin;
         if (!origins[origin]) {
-            origins[origin] = 1;
+            origins[origin] = [tea.name];
         } else {
-            origins[origin]++;
+            origins[origin].push(tea.name);
         }
     });
     return origins;
