@@ -5,7 +5,8 @@ function searchTeas(teas, query) {
   // Return teas where the name contains the query (case-insensitive)
   const filtered = teas.filter(tea => tea.name.toLowerCase().includes(queryLower));
   // Return just the names, sorted alphabetically
-  return filtered.map(tea => tea.name);
+  const names = filtered.map(tea => tea.name).sort();
+  return names;
 }
 
 console.log(searchTeas(teas, "earl"));
