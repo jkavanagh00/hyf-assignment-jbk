@@ -10,13 +10,6 @@ function findTeaById(id, callback) {
   // Inside the timeout: find the tea by id, then call the callback with it
 }
 
-// Test it:
-console.log("Looking up tea...");
-findTeaById(3, function (tea) {
-  console.log("Found:", tea.name);
-});
-console.log("Request sent, waiting...");
-
 findTeaById(1, function (tea) {
   console.log("Got:", tea.name);
 });
