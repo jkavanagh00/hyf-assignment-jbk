@@ -24,7 +24,7 @@ function validateOrder(order, callback) {
       valid: errors.length === 0,
       errors,
     });
-  }, 2000);
+  }, 200);
 }
 
 validateOrder(order, (result) => {
@@ -45,7 +45,7 @@ function calculateTotal(order, callback) {
       orderId : order.id,
       total,
     });
-  }, 3000)
+  }, 300)
 }
 
 calculateTotal(order, (result) => {
@@ -76,7 +76,7 @@ function checkStock(order, callback) {
       inStock: inStock,
       shortages: shortages,
     });
-  }, 4000);
+  }, 400);
 }
 
 checkStock(order, (result) => {
