@@ -26,8 +26,10 @@ function runSequentially(tasks, finalCallback) {
       return;
     }
 
-    tasks[i](next);
+    const task = tasks[i]; 
     i++;
+    task(next);
+    
   };
 
   next();
