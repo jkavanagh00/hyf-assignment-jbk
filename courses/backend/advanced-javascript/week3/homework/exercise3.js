@@ -1,6 +1,6 @@
 const API_BASE = "https://tea-api-787553294298.europe-west1.run.app/api";
 
-async function calculateOrderTotal(items) {
+export async function calculateOrderTotal(items) {
   const teas = await fetch(`${API_BASE}/teas/`)
     .then((result) => {
       if (!result.ok) throw new Error("Uh-oh!");
@@ -21,12 +21,12 @@ async function calculateOrderTotal(items) {
   return total;
 }
 
-const order = [
-  { teaId: 1, grams: 100 },
-  { teaId: 3, grams: 50 },
-  { teaId: 8, grams: 200 },
-];
+// const order = [
+//   { teaId: 1, grams: 100 },
+//   { teaId: 3, grams: 50 },
+//   { teaId: 8, grams: 200 },
+// ];
 
-calculateOrderTotal(order)
-  .then((total) => console.log(`Order total: ${total.toFixed(2)} DKK`))
-  .catch((err) => console.error("Error:", err.message));
+// calculateOrderTotal(order)
+//   .then((total) => console.log(`Order total: ${total.toFixed(2)} DKK`))
+//   .catch((err) => console.error("Error:", err.message));
