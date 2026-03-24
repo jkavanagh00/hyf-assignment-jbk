@@ -12,12 +12,10 @@ async function searchTeas(query) {
     } catch (error) {
         console.error("Error fetching data:", error);
     }
-    // 2. Filter to teas where name includes query (case-insensitive)
-    // 3. Return array of matching tea objects
 }
 
 // Test it:
-searchTeas("pearl").then((teas) => {
-    console.log("Search results for 'pearl':");
-    teas.forEach((tea) => console.log(`- ${tea.name}`));
-});
+// searchTeas("pearl").then((teas) => {
+//     console.log("Search results for 'pearl':");
+//     teas.forEach((tea) => console.log(`- ${tea.name}`));
+// });

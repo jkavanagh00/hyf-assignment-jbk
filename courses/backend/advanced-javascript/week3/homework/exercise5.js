@@ -6,7 +6,6 @@ const API_BASE = "https://tea-api-787553294298.europe-west1.run.app/api";
 async function processOrder(items) {
   console.log("Processing order...");
 
-  // Step 1: Validate items exist
   console.log("\n1. Validating items...");
   const teas = await fetch(`${API_BASE}/teas/`)
     .then((result) => {
@@ -28,7 +27,6 @@ async function processOrder(items) {
   }
   console.log("Order successfully validated");
 
-  // Step 2: Check stock
   console.log("\n2. Checking stock...");
   const stockResult = await checkOrderStock(items);
   if (!stockResult.inStock) {
@@ -41,12 +39,10 @@ async function processOrder(items) {
     console.log("All items in stock");
   }
 
-  // Step 3: Calculate total
   console.log("\n3. Calculating total...");
   const total = await calculateOrderTotal(items);
   console.log(total.toFixed(2));
-  
-  // Step 4: Create order summary
+
   console.log("\n4. Creating summary...");
   const teasOrdered = await Promise.all(
     items.map(async (item) => {
@@ -73,6 +69,7 @@ async function processOrder(items) {
     status: "ready",
   };
 }
+
 // Invalid ID order
 // const invalidIDOrder = [
 //   { teaId: 3, grams: 50 },
