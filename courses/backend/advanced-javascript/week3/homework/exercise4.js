@@ -25,7 +25,6 @@ export async function checkOrderStock(items) {
         };
     }, [])
     .filter(Boolean);
-  console.log(shortages);
   return { inStock: inStock, shortages: shortages };
 }
 
