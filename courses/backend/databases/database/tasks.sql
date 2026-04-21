@@ -196,6 +196,7 @@ UPDATE task
 	WHERE id = 40;
 
 -- Part 1, Question 6: Delete the task
+-- In the schema, user_task.task_id has ON DELETE CASCADE, so deleting the task should automatically delete matching rows in user_task. Is this incorrect?
 DELETE FROM task
 	WHERE id = 40;
 DELETE FROM user_task
