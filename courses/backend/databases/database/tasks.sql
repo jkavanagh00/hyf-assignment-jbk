@@ -150,7 +150,7 @@ INSERT INTO user (name, email, phone)
 
 -- Part 1, Question 2: Insert a new task assigned to yourself
 INSERT INTO task (title, description, created, updated, due_date, status_id) 
-	VALUES ('Learn SQL', 'Practice database queries', '2017-10-25 05:35:33', '2017-10-10 23:22:33', '2026-04-13 00:19:08', 2);
+	VALUES ('Learn SQL', 'Practice database queries', datetime('now'), datetime('now'), datetime('now', '+7 days'), (SELECT id FROM status WHERE name = 'in progress'));
 INSERT INTO user_task (user_id, task_id) 
 	VALUES(12, 40);
 
