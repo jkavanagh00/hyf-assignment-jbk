@@ -212,7 +212,7 @@ SELECT name
 -- Part 2, Question 2: Find all tasks with a status of 'done'
 SELECT *
 	FROM task
-	WHERE status_id = 3;
+	WHERE status_id = (SELECT id FROM status WHERE name = 'done');
 
 -- Part 2, Question 3: Find all overdue tasks
 SELECT *
