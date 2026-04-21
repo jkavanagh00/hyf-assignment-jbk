@@ -217,7 +217,7 @@ SELECT *
 -- Part 2, Question 3: Find all overdue tasks
 SELECT *
 	FROM task
-	WHERE due_date < '2026-04-13';
+	WHERE due_date < DATETIME('now');
 
 -- Assignment, Part 3: Modifying the Database Schema
 
