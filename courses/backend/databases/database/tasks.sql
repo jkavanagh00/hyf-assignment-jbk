@@ -151,8 +151,34 @@ INSERT INTO user (name, email, phone)
 -- Part 1, Question 2: Insert a new task assigned to yourself
 INSERT INTO task (title, description, created, updated, due_date, status_id) 
 	VALUES ('Learn SQL', 'Practice database queries', datetime('now'), datetime('now'), datetime('now', '+7 days'), (SELECT id FROM status WHERE name = 'in progress'));
-INSERT INTO user_task (user_id, task_id) 
-	VALUES(12, 40);
+
+-- this solution still has problems, since task.title is not a unique value
+INSERT INTO user_task (user_id, task_id)
+VALUES (
+  (SELECT id FROM user WHERE email = 'jkavanagh00@gmail.com'),
+  (SELECT id FROM task WHERE title = 'Learn SQL')
+);
+-- the following, better solution was written with the help of an LLM
+WITH assigned_user AS (
+  SELECT id
+  FROM user
+  WHERE email = 'jkavanagh00@gmail.com'
+),
+new_task AS (
+  INSERT INTO task (title, description, created, updated, due_date, status_id)
+  VALUES (
+    'Learn SQL',
+    'Practice database queries',
+    datetime('now'),
+    datetime('now'),
+    datetime('now', '+7 days'),
+    (SELECT id FROM status WHERE name = 'in progress')
+  )
+  RETURNING id
+)
+INSERT INTO user_task (user_id, task_id)
+SELECT assigned_user.id, new_task.id
+FROM assigned_user, new_task;
 
 -- Part 1, Question 3: Update the title of the task
 UPDATE task
