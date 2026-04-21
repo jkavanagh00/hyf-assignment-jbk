@@ -150,13 +150,39 @@ INSERT INTO user (name, email, phone)
 
 -- Part 1, Question 2: Insert a new task assigned to yourself
 INSERT INTO task (title, description, created, updated, due_date, status_id) 
-	VALUES ('Learn SQL', 'Practice database queries', '2017-10-25 05:35:33', '2017-10-10 23:22:33', '2026-04-13 00:19:08', 2);
-INSERT INTO user_task (user_id, task_id) 
-	VALUES(12, 40);
+	VALUES ('Learn SQL', 'Practice database queries', datetime('now'), datetime('now'), datetime('now', '+7 days'), (SELECT id FROM status WHERE name = 'in progress'));
+
+-- this solution still has problems, since task.title is not a unique value
+INSERT INTO user_task (user_id, task_id)
+VALUES (
+  (SELECT id FROM user WHERE email = 'jkavanagh00@gmail.com'),
+  (SELECT id FROM task WHERE title = 'Learn SQL')
+);
+-- the following, better solution was written with the help of an LLM
+WITH assigned_user AS (
+  SELECT id
+  FROM user
+  WHERE email = 'jkavanagh00@gmail.com'
+),
+new_task AS (
+  INSERT INTO task (title, description, created, updated, due_date, status_id)
+  VALUES (
+    'Learn SQL',
+    'Practice database queries',
+    datetime('now'),
+    datetime('now'),
+    datetime('now', '+7 days'),
+    (SELECT id FROM status WHERE name = 'in progress')
+  )
+  RETURNING id
+)
+INSERT INTO user_task (user_id, task_id)
+SELECT assigned_user.id, new_task.id
+FROM assigned_user, new_task;
 
 -- Part 1, Question 3: Update the title of the task
 UPDATE task
-	SET title = 'Master SQL basics'
+	SET title = 'Master SQL basics', updated = DATETIME('now')
 	WHERE id = 40;
 
 -- Part 1, Question 4: Change the due date to two weeks from today
@@ -170,6 +196,7 @@ UPDATE task
 	WHERE id = 40;
 
 -- Part 1, Question 6: Delete the task
+-- In the schema, user_task.task_id has ON DELETE CASCADE, so deleting the task should automatically delete matching rows in user_task. Is this incorrect?
 DELETE FROM task
 	WHERE id = 40;
 DELETE FROM user_task
@@ -185,12 +212,12 @@ SELECT name
 -- Part 2, Question 2: Find all tasks with a status of 'done'
 SELECT *
 	FROM task
-	WHERE status_id = 3;
+	WHERE status_id = (SELECT id FROM status WHERE name = 'done');
 
 -- Part 2, Question 3: Find all overdue tasks
 SELECT *
 	FROM task
-	WHERE due_date < '2026-04-13';
+	WHERE due_date < DATETIME('now');
 
 -- Assignment, Part 3: Modifying the Database Schema
 
