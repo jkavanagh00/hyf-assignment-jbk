@@ -182,7 +182,7 @@ FROM assigned_user, new_task;
 
 -- Part 1, Question 3: Update the title of the task
 UPDATE task
-	SET title = 'Master SQL basics'
+	SET title = 'Master SQL basics', updated = DATETIME('now')
 	WHERE id = 40;
 
 -- Part 1, Question 4: Change the due date to two weeks from today
