@@ -258,14 +258,14 @@ SELECT
 	COUNT(t.id) AS total_tasks,
 	SUM(
 		CASE
-			WHEN s.name = 'done' THEN 1
+			WHEN s.name = 'completed' THEN 1
 			ELSE 0
 		END
 	) as total_completed,
 	SUM(
 		CASE
 			WHEN t.due_date < date ('now')
-			AND s.name != 'done' THEN 1
+			AND s.name != 'completed' THEN 1
 			ELSE 0
 		END
 	) AS total_overdue,
