@@ -59,8 +59,7 @@ LIMIT
 SELECT
 	COUNT(*) AS total_tasks
 FROM
-	task t
-	JOIN user_task ut ON ut.task_id = t.id;
+	task t;
 
 -- Part A, question 2: Count how many tasks each user has been assigned
 SELECT
