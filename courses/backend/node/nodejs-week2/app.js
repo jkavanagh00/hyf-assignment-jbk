@@ -8,6 +8,8 @@ import snippetsRouter from "./api/snippets.js";
 app.use("/api/snippets", snippetsRouter);
 import tagsRouter from "./api/tags.js";
 app.use("/api/tags", tagsRouter);
+import usersRouter from "./api/users.js";
+app.use("/api/users", usersRouter);
 
 const port = process.env.PORT || 3000;
 const textFilePath =
