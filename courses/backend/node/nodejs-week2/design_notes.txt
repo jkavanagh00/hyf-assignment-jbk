@@ -1,0 +1,11 @@
+added two arrays of whitelist columns and directions
+split sort query by whitespace, making it an array rather than a string to facilitate use of the .orderBy() knex method, a safer option than .orderByRaw()
+length checks now check array lengths to control behaviour
+column and direction values are assigned to convenience variables using array destructuring to improve readability, especially in .orderBy() calls
+variables are checked against whitelist, using early return to end execution and return a 400 status and an error message if values are invalid
+
+questions:
+whitelist checks are case sensitive
+    should they be?
+empty queries still create an array of length 1, but are caught by the whitelist check
+    should such errors be handled separately?
