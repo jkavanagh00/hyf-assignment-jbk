@@ -4,12 +4,35 @@ const router = express.Router();
 
 // Returns all snippets
 router.get("/", async (req, res) => {
+  const allowedColumns = ["title", "created_at", "id", "user_id"];
+  const allowedDirections = ["ASC", "DESC"];
   let query = knex("snippets").select("*");
 
   if ("sort" in req.query) {
-    const orderBy = req.query.sort.toString();
-    if (orderBy.length > 0) {
-      query = query.orderByRaw(orderBy); // Vulnerable!
+    const orderBy = req.query.sort.toString().split(" ");
+    
+    if (orderBy.length > 2) {
+      return res.status(400).json({ error: "Too many ordering terms (400)" });
+
+    } else if (orderBy.length === 1) {
+      let column;
+      [column] = orderBy;
+      if (!allowedColumns.includes(column)) {
+        return res.status(400).json({ error: "Invalid column (400)" });
+      }
+      query = query.orderBy(orderBy);
+
+    } else if (orderBy.length === 2) {
+      let column;
+      let direction;
+      [column, direction] = orderBy;
+      if (
+        !allowedColumns.includes(column) ||
+        !allowedDirections.includes(direction)
+      ) {
+        return res.status(400).json({ error: "Invalid column and/or direction (400)" });
+      }
+      query = query.orderBy(column, direction);
     }
   }
 
