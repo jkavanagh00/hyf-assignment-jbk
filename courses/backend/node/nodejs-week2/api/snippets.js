@@ -1,8 +1,26 @@
 import express, { request, response } from "express";
 import knex from "../database.js";
+import z from "zod";
 const router = express.Router();
 
-// Returns all snippets
+const createSnippetSchema = z.object({
+  user_id: z.number().min(1),
+  title: z.string().min(3),
+  contents: z.string().min(3),
+  is_private: z.union([z.literal(0), z.literal(1)]),
+});
+
+const updateSnippetSchema = createSnippetSchema.partial().refine(
+  (data) => {
+    return Object.keys(data).length > 0;
+  },
+  { message: "At least one update field must be provided" },
+);
+
+const snippetIdSchema = z.object({
+  id: z.number().min(1),
+});
+
 router.get("/", async (req, res) => {
   let snippets = knex("snippets").select(
     "snippets.id",
@@ -113,36 +131,25 @@ router.get("/", async (req, res) => {
 
 // Adds a new snippet to the database
 router.post("/", async (request, response) => {
-  const { title, contents } = request.body;
+  const newSnippetData = createSnippetSchema.safeParse(request.body);
+
+  if (!newSnippetData.success) {
+    return response.status(400).json({ error: newSnippetData.error });
+  }
+
+  const { user_id, title, contents } = request.body;
   const is_private = request.body.is_private;
-  const rawUserId = request.body.user_id;
-
-  if (rawUserId == null || !title || !contents) {
-    return response.status(400).json({
-      error: "user_id, title, and contents are required (400)",
-    });
-  }
-
-  const user_id = Number(rawUserId);
-  if (!Number.isInteger(user_id) || user_id < 1) {
-    return response
-      .status(400)
-      .json({ error: "user_id must be a positive integer (400)" });
-  }
 
   try {
     const snippetToInsert = {
-      user_id: user_id,
+      user_id,
       title,
       contents,
+      is_private,
     };
 
-    if (is_private !== undefined) {
-      snippetToInsert.is_private = is_private ? 1 : 0;
-    }
-
     const [id] = await knex("snippets").insert(snippetToInsert);
-    response.status(201).json({ id });
+    response.status(201).json({ "created snippet id": id });
   } catch (error) {
     console.error(error);
     response.status(500).json({ error: "Failed to create snippet (500)" });
@@ -151,6 +158,14 @@ router.post("/", async (request, response) => {
 
 // Returns the snippet by id
 router.get("/:id", async (request, response) => {
+  const snippetId = snippetIdSchema.safeParse({
+    id: Number(request.params.id),
+  });
+
+  if (!snippetId.success) {
+    return response.status(400).json({ error: snippetId.error });
+  }
+
   try {
     const snippet = await knex("snippets")
       .where({ id: request.params.id })
@@ -169,18 +184,23 @@ router.get("/:id", async (request, response) => {
 
 // Updates the snippet by id
 router.put("/:id", async (request, response) => {
-  const { title, contents } = request.body;
+  const snippetId = snippetIdSchema.safeParse({
+    id: Number(request.params.id),
+  });
+  const snippetUpdate = updateSnippetSchema.safeParse(request.body);
+  console.log(await snippetUpdate.success, request.body);
+  if (!snippetId.success) {
+    return response.status(400).json({ error: snippetId.error });
+  }
 
-  if (!title || !contents) {
-    return response
-      .status(400)
-      .json({ error: "Title and contents are required (400)" });
+  if (!snippetUpdate.success) {
+    return response.status(400).json({ error: snippetUpdate.error });
   }
 
   try {
     const updated = await knex("snippets")
       .where({ id: request.params.id })
-      .update({ title, contents });
+      .update(snippetUpdate.data);
 
     if (!updated) {
       return response.status(404).json({ error: "Snippet not found (404)" });
@@ -197,6 +217,14 @@ router.put("/:id", async (request, response) => {
 
 // Deletes the snippet by id
 router.delete("/:id", async (request, response) => {
+  const snippetId = snippetIdSchema.safeParse({
+    id: Number(request.params.id),
+  });
+
+  if (!snippetId.success) {
+    return response.status(400).json({ error: snippetId.error });
+  }
+
   try {
     const deleted = await knex("snippets")
       .where({ id: request.params.id })
