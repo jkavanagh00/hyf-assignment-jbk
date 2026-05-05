@@ -9,7 +9,11 @@ const createUserSchema = z.object({
   email: z.email(),
 });
 
-const updateUserSchema = createUserSchema.partial().refine((data) => Object.keys(data).length > 0, { message: "At least one update field must be provided"});
+const updateUserSchema = createUserSchema
+  .partial()
+  .refine((data) => Object.keys(data).length > 0, {
+    message: "At least one update field must be provided",
+  });
 
 const userIdSchema = z.object({
   id: z.number().min(1),
@@ -26,6 +30,14 @@ router.get("/", async (request, response) => {
 });
 
 router.get("/:id", async (request, response) => {
+  const idResult = userIdSchema.safeParse({ id: Number(request.params.id) });
+
+  if (!idResult.success) {
+    return response.status(400).json({
+      error: idResult.error,
+    });
+  }
+  
   try {
     const user = await knex("users")
       .where("id", "=", request.params.id)
@@ -43,7 +55,7 @@ router.get("/:id", async (request, response) => {
 router.put("/:id", async (request, response) => {
   const idResult = userIdSchema.safeParse({ id: Number(request.params.id) });
   const userResult = updateUserSchema.safeParse(request.body);
-  
+
   if (!idResult.success) {
     return response.status(400).json({
       error: idResult.error,
@@ -55,7 +67,7 @@ router.put("/:id", async (request, response) => {
     });
   }
 
-  console.log(userResult, idResult)
+  console.log(userResult, idResult);
 
   try {
     const userToUpdate = await knex("users")
@@ -71,4 +83,4 @@ router.put("/:id", async (request, response) => {
   }
 });
 
-export default router
+export default router;
