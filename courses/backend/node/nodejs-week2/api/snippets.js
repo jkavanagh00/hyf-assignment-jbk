@@ -4,42 +4,68 @@ const router = express.Router();
 
 // Returns all snippets
 router.get("/", async (req, res) => {
-  const allowedColumns = ["title", "created_at", "id", "user_id"];
-  const allowedDirections = ["ASC", "DESC"];
-  let query = knex("snippets").select("*");
+  let snippets = knex("snippets").select(
+    "snippets.id",
+    "snippets.created_at",
+    "snippets.user_id",
+    "snippets.title",
+    "snippets.contents",
+    "snippets.is_private",
+    "snippet_tags.tag_id",
+    "tags.title as tag_title"
+  );
 
-  if ("sort" in req.query) {
-    const orderBy = req.query.sort.toString().split(" ");
-    
-    if (orderBy.length > 2) {
-      return res.status(400).json({ error: "Too many ordering terms (400)" });
+  if (req.query) {
+    if ("sort" in req.query) {
+      const allowedColumns = ["title", "contents", "created_at", "user_id"];
+      const allowedDirections = ["ASC", "DESC"];
+      const orderBy = req.query.sort.toString().split(" ");
 
-    } else if (orderBy.length === 1) {
-      let column;
-      [column] = orderBy;
-      if (!allowedColumns.includes(column)) {
-        return res.status(400).json({ error: "Invalid column (400)" });
+      if (orderBy.length > 2) {
+        return res.status(400).json({ error: "Too many ordering terms (400)" });
+      } else if (orderBy.length === 1) {
+        let column;
+        [column] = orderBy;
+        if (!allowedColumns.includes(column)) {
+          return res.status(400).json({ error: "Invalid column (400)" });
+        }
+        snippets = snippets.orderBy(orderBy);
+      } else if (orderBy.length === 2) {
+        let column;
+        let direction;
+        [column, direction] = orderBy;
+        if (
+          !allowedColumns.includes(column) ||
+          !allowedDirections.includes(direction)
+        ) {
+          return res
+            .status(400)
+            .json({ error: "Invalid column and/or direction (400)" });
+        }
+        snippets = snippets.orderBy(column, direction);
       }
-      query = query.orderBy(orderBy);
+    }
 
-    } else if (orderBy.length === 2) {
-      let column;
-      let direction;
-      [column, direction] = orderBy;
-      if (
-        !allowedColumns.includes(column) ||
-        !allowedDirections.includes(direction)
-      ) {
-        return res.status(400).json({ error: "Invalid column and/or direction (400)" });
-      }
-      query = query.orderBy(column, direction);
+    if ("tag" in req.query) {
+      const tag = req.query.tag.toString();
+      snippets = snippets
+        .join("snippet_tags", "snippets.id", "=", "snippet_tags.snippet_id")
+        .join("tags", "tags.id", "=", "snippet_tags.tag_id")
+        .where("tags.title", "=", tag);
+    }
+
+    if ("search" in req.query) {
+      const search = `%${req.query.search.toString()}%`;
+      snippets = snippets
+        .whereILike("title", search)
+        .orWhereILike("contents", search);
     }
   }
-
-  console.log("SQL", query.toSQL().sql);
-
   try {
-    const data = await query;
+    const data = await snippets;
+    if (data.length < 1) {
+      return res.status(404).json({ message: "Snippet not found (404)" });
+    }
     res.json({ data });
   } catch (e) {
     console.error(e);
@@ -82,31 +108,6 @@ router.post("/", async (request, response) => {
   } catch (error) {
     console.error(error);
     response.status(500).json({ error: "Failed to create snippet (500)" });
-  }
-});
-
-// Search snippets by title
-router.get("/search", async (request, response) => {
-  const query = request.query.q?.toString().trim();
-
-  if (!query) {
-    return response.status(400).json({ error: "Query is required (400)" });
-  }
-
-  try {
-    const snippets = await knex("snippets").whereRaw(
-      "LOWER(title) LIKE ? OR LOWER(contents) LIKE ?",
-      [`%${query.toLowerCase()}%`, `%${query.toLowerCase()}%`],
-    );
-
-    if (snippets.length < 1) {
-      return response.status(404).json({ error: "Snippet not found (404)" });
-    }
-
-    response.status(201).json(snippets);
-  } catch (error) {
-    console.error(error);
-    response.status(500).json({ error: "Failed to search snippets (500)" });
   }
 });
 
