@@ -29,6 +29,30 @@ router.get("/", async (request, response) => {
   }
 });
 
+router.get("/search", async (request, response) => {
+  const query = request.query.q?.toString().trim().toLowerCase();
+  console.log(query);
+  if (!query) {
+    return response.status(400).json({ error: "Query is required (400)" });
+  }
+
+  try {
+    const users = await knex("users")
+      .whereILike("first_name", `%${query}%`)
+      .orWhereILike("last_name", `%${query}%`)
+      .orWhereILike("email", `%${query}%`);
+
+    if (users.length < 1) {
+      return response.status(404).json({ error: "User not found (404)" });
+    }
+
+    response.status(200).json(users);
+  } catch (error) {
+        console.error(error);
+    response.status(500).json({ error: "Failed to search users (500)" });
+  }
+});
+
 router.get("/:id", async (request, response) => {
   const idResult = userIdSchema.safeParse({ id: Number(request.params.id) });
 
@@ -94,8 +118,8 @@ router.post("/", async (request, response) => {
 
   try {
     const userToCreate = await knex("users").insert(userResult.data);
-    response.status(201).json({ message: "User created successfully (201)" })
-  } catch(error) {
+    response.status(201).json({ message: "User created successfully (201)" });
+  } catch (error) {
     console.error(error);
     response.status(500).json({ error: "Failed to update user (500)" });
   }
