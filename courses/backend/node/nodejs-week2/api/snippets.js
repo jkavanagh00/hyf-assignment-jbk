@@ -11,9 +11,8 @@ router.get("/", async (req, res) => {
     "snippets.title",
     "snippets.contents",
     "snippets.is_private",
-    "snippet_tags.tag_id",
-    "tags.title as tag_title"
   );
+  const snippetMap = {};
 
   if (req.query) {
     if ("sort" in req.query) {
@@ -48,10 +47,44 @@ router.get("/", async (req, res) => {
 
     if ("tag" in req.query) {
       const tag = req.query.tag.toString();
-      snippets = snippets
+      snippets = await snippets
         .join("snippet_tags", "snippets.id", "=", "snippet_tags.snippet_id")
         .join("tags", "tags.id", "=", "snippet_tags.tag_id")
-        .where("tags.title", "=", tag);
+        .select(
+          "snippets.id",
+          "snippets.created_at",
+          "snippets.user_id",
+          "snippets.title",
+          "snippets.contents",
+          "snippets.is_private",
+          "tags.id as tag_id",
+          "tags.title as tag_title",
+        );
+
+      snippets.forEach((snippet) => {
+        if (!(snippet.id in snippetMap)) {
+          snippetMap[snippet.id] = {
+            id: snippet.id,
+            created_at: snippet.created_at,
+            user_id: snippet.user_id,
+            title: snippet.title,
+            contents: snippet.contents,
+            is_private: snippet.is_private,
+            tags: [],
+          };
+        }
+        if (snippet.tag_id && snippet.tag_title) {
+          snippetMap[snippet.id].tags.push({
+            tag_id: snippet.tag_id,
+            tag_title: snippet.tag_title,
+          });
+        }
+      });
+      console.log(snippetMap);
+      snippets = Object.values(await snippetMap).filter((snippet) =>
+        snippet.tags.some((tag) => tag.tag_title === req.query.tag.toString()),
+      );
+      console.log(snippets);
     }
 
     if ("search" in req.query) {
@@ -62,7 +95,12 @@ router.get("/", async (req, res) => {
     }
   }
   try {
-    const data = await snippets;
+    let data;
+    if (Array.isArray(snippets)) {
+      data = snippets;
+    } else {
+      data = await snippets;
+    }
     if (data.length < 1) {
       return res.status(404).json({ message: "Snippet not found (404)" });
     }
