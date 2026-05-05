@@ -37,7 +37,7 @@ router.get("/:id", async (request, response) => {
       error: idResult.error,
     });
   }
-  
+
   try {
     const user = await knex("users")
       .where("id", "=", request.params.id)
@@ -78,6 +78,24 @@ router.put("/:id", async (request, response) => {
     }
     response.status(201).json(userToUpdate);
   } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: "Failed to update user (500)" });
+  }
+});
+
+router.post("/", async (request, response) => {
+  const userResult = createUserSchema.safeParse(request.body);
+
+  if (!userResult.success) {
+    return response.status(400).json({
+      error: userResult.error,
+    });
+  }
+
+  try {
+    const userToCreate = await knex("users").insert(userResult.data);
+    response.status(201).json({ message: "User created successfully (201)" })
+  } catch(error) {
     console.error(error);
     response.status(500).json({ error: "Failed to update user (500)" });
   }
