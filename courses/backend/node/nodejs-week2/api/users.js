@@ -48,7 +48,7 @@ router.get("/search", async (request, response) => {
 
     response.status(200).json(users);
   } catch (error) {
-        console.error(error);
+    console.error(error);
     response.status(500).json({ error: "Failed to search users (500)" });
   }
 });
@@ -104,6 +104,31 @@ router.put("/:id", async (request, response) => {
   } catch (error) {
     console.error(error);
     response.status(500).json({ error: "Failed to update user (500)" });
+  }
+});
+
+router.delete("/:id", async (request, response) => {
+  const idResult = userIdSchema.safeParse({ id: Number(request.params.id) });
+
+  if (!idResult.success) {
+    return response.status(400).json({
+      error: idResult.error,
+    });
+  }
+  console.log(idResult.data.id);
+  try {
+    const userToDelete = await knex("users")
+      .where("id", "=", idResult.data.id)
+      .delete();
+    if (!userToDelete) {
+      return response.status(404).json({ error: "User not found (404)" });
+    }
+    response.status(200).json({ message: "User deleted successfully (200)" });
+  } catch (error) {
+    console.error(error);
+    response
+      .status(500)
+      .json({ error: "Failed to fetch user for deletion (500)" });
   }
 });
 
