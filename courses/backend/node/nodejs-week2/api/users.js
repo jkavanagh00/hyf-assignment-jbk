@@ -4,8 +4,8 @@ import z from "zod";
 const router = express.Router();
 
 const createUserSchema = z.object({
-  first_name: z.string().max(64),
-  last_name: z.string().max(64),
+  first_name: z.string().max(64).min(1),
+  last_name: z.string().max(64).min(1),
   email: z.email(),
 });
 
