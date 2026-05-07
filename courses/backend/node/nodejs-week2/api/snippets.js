@@ -129,7 +129,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Adds a new snippet to the database
 router.post("/", async (request, response) => {
   const newSnippetData = createSnippetSchema.safeParse(request.body);
 
@@ -156,7 +155,6 @@ router.post("/", async (request, response) => {
   }
 });
 
-// Returns the snippet by id
 router.get("/:id", async (request, response) => {
   const snippetId = snippetIdSchema.safeParse({
     id: Number(request.params.id),
@@ -175,14 +173,13 @@ router.get("/:id", async (request, response) => {
       return response.status(404).json({ error: "Snippet not found (404)" });
     }
 
-    response.json(snippet);
+    response.status(200).json(snippet);
   } catch (error) {
     console.error(error);
     response.status(500).json({ error: "Failed to fetch snippets (500)" });
   }
 });
 
-// Updates the snippet by id
 router.put("/:id", async (request, response) => {
   const snippetId = snippetIdSchema.safeParse({
     id: Number(request.params.id),
@@ -215,7 +212,6 @@ router.put("/:id", async (request, response) => {
   }
 });
 
-// Deletes the snippet by id
 router.delete("/:id", async (request, response) => {
   const snippetId = snippetIdSchema.safeParse({
     id: Number(request.params.id),
