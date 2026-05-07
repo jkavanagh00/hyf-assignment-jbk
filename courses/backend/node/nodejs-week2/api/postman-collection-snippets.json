@@ -1,0 +1,93 @@
+{
+  "info": {
+    "name": "Snippets API",
+    "_postman_id": "b1e1e1e1-1234-5678-9101-abcdefabcdef",
+    "description": "Collection for Snippets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Snippets",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/snippets/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "snippets"],
+          "query": [
+            { "key": "sort", "value": "", "description": "e.g. title ASC" },
+            { "key": "tag", "value": "", "description": "Tag title" },
+            { "key": "search", "value": "", "description": "Search string" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Snippet",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": 1,\n  \"title\": \"Sample Snippet\",\n  \"contents\": \"console.log('Hello, world!');\",\n  \"is_private\": 0\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/snippets/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "snippets"]
+        }
+      }
+    },
+    {
+      "name": "Get Snippet by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/snippets/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "snippets", "1"]
+        }
+      }
+    },
+    {
+      "name": "Update Snippet",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated Title\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/snippets/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "snippets", "1"]
+        }
+      }
+    },
+    {
+      "name": "Delete Snippet",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/snippets/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "snippets", "1"]
+        }
+      }
+    }
+  ]
+}
