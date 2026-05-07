@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+  title: Snippets API
+  version: 1.0.0
+  description: API for managing code snippets.
+servers:
+  - url: /api
+paths:
+  /snippets/:
+    get:
+      summary: Retrieve a list of snippets, with optional sorting, tag filtering, and search.
+      parameters:
+        - in: query
+          name: sort
+          schema:
+            type: string
+          description: "Sort by column and direction, e.g. 'title ASC' or 'created_at DESC'. Allowed columns: title, contents, created_at, user_id. Allowed directions: ASC, DESC."
+        - in: query
+          name: tag
+          schema:
+            type: string
+          description: "Filter snippets by tag title."
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: "Search for snippets by title or contents (case-insensitive, partial match)."
+      responses:
+        "200":
+          description: On success, returns an array of snippet objects (optionally with tags).
+        "400":
+          description: If query parameters are invalid.
+        "404":
+          description: If no snippets are found.
+        "500":
+          description: If a server or database error occurs.
+    post:
+      summary: Create a new snippet.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user_id
+                - title
+                - contents
+                - is_private
+              properties:
+                user_id:
+                  type: integer
+                  description: The ID of the user creating the snippet.
+                title:
+                  type: string
+                  minLength: 3
+                  description: The title of the snippet.
+                contents:
+                  type: string
+                  minLength: 3
+                  description: The contents of the snippet.
+                is_private:
+                  type: integer
+                  enum: [0, 1]
+                  description: Whether the snippet is private (0 = public, 1 = private).
+      responses:
+        "201":
+          description: On success, returns the new snippet's ID.
+        "400":
+          description: If validation fails.
+        "500":
+          description: If database insertion fails.
+  /snippets/{id}:
+    get:
+      summary: Retrieve a snippet by its ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the snippet to retrieve.
+      responses:
+        "200":
+          description: On success, returns the snippet object.
+        "400":
+          description: If validation fails.
+        "404":
+          description: If the snippet cannot be found.
+        "500":
+          description: If a database request fails.
+    put:
+      summary: Update a snippet by its ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the snippet to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: The ID of the user creating the snippet (optional).
+                title:
+                  type: string
+                  minLength: 3
+                  description: The title of the snippet (optional, min 3 chars).
+                contents:
+                  type: string
+                  minLength: 3
+                  description: The contents of the snippet (optional, min 3 chars).
+                is_private:
+                  type: integer
+                  enum: [0, 1]
+                  description: Whether the snippet is private (0 = public, 1 = private).
+      responses:
+        "200":
+          description: On success, returns a message with a 200 status.
+        "400":
+          description: If validation fails.
+        "404":
+          description: If the snippet cannot be found.
+        "500":
+          description: If a database request fails.
+    delete:
+      summary: Delete a snippet by its ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the snippet to delete.
+      responses:
+        "200":
+          description: On success, returns a message with a 200 status.
+        "400":
+          description: If validation fails.
+        "404":
+          description: If the snippet cannot be found.
+        "500":
+          description: If a database request fails.
