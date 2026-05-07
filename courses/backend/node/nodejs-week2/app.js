@@ -1,7 +1,11 @@
 import express, { request, response } from "express";
 import knex from "./database.js";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
 
 const app = express();
+const swaggerDocument = YAML.load("./api/openapi.yaml");
 app.use(express.json());
 
 import snippetsRouter from "./api/snippets.js";
@@ -10,6 +14,20 @@ import tagsRouter from "./api/tags.js";
 app.use("/api/tags", tagsRouter);
 import usersRouter from "./api/users.js";
 app.use("/api/users", usersRouter);
+
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Snippets API",
+      version: "1.0.0",
+      description: "API documentation for the Snippets service",
+    },
+  },
+  apis: ["**/api/snippets.js"],
+};
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const port = process.env.PORT || 3000;
 const textFilePath =
@@ -35,7 +53,7 @@ app.get("/api/search", async (request, response) => {
     if (tags.length === 0 && snippets.length === 0) {
       return response.status(404).json({ error: "Content not found (404)" });
     }
-    response.status(201).json(snippets.concat(tags)); 
+    response.status(201).json(snippets.concat(tags));
   } catch (error) {
     console.error(error);
     response.status(500).json({ error: "Failed to search content (500)" });
@@ -49,3 +67,5 @@ app.listen(port, (error) => {
     console.log(`Listening on port ${port}`);
   }
 });
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
